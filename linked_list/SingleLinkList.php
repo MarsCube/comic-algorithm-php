@@ -1,21 +1,9 @@
 <?php
 
-class Node
-{
-    public $data;
+namespace app\linked_list;
+require_once('Node.php');
 
-    /**
-     * @var null | Node
-     */
-    public $next;
-
-    public function __construct($data)
-    {
-        $this->data = $data;
-        $this->next = null;
-    }
-
-}
+use Exception;
 
 /**
  * Class SingleLinkList
