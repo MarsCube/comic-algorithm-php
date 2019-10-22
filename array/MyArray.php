@@ -43,6 +43,16 @@ class MyArray
         }
     }
 
+    public function addFirst(int $value)
+    {
+        $this->add(0, $value);
+    }
+
+    public function addLast(int $value)
+    {
+        $this->add($this->size, $value);
+    }
+
     public function delete(int $index)
     {
         if ($index < 0 || $index > $this->capacity - 1) {
@@ -69,6 +79,34 @@ class MyArray
         $this->array = $newArray;
         $this->capacity = $newCapacity;
     }
+
+    public function get(int $index)
+    {
+        if ($index < 0 || $index > $this->capacity - 1) {
+            throw new Exception('out of range');
+        }
+
+        return $this->array[$index];
+    }
+
+    public function getFirst()
+    {
+        return $this->get(0);
+    }
+
+    public function getLast()
+    {
+        return $this->get($this->size - 1);
+    }
+
+    public function set(int $index, int $value)
+    {
+        if ($index < 0 || $index > $this->capacity - 1) {
+            throw new Exception('out of range');
+        }
+
+        $this->array[$index] = $value;
+    }
 }
 
 $arr = new MyArray(3);
@@ -91,4 +129,7 @@ $arr->delete(1);
 $arr->delete(1);
 var_dump($arr->toString());
 $arr->delete(0);
+var_dump($arr->toString());
+$arr->addFirst(124);
+$arr->addLast(999);
 var_dump($arr->toString());
