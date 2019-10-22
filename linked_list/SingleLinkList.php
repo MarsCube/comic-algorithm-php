@@ -28,6 +28,7 @@ class SingleLinkList
      * @var Node
      */
     private $dummyHead;
+    private $tail;
 
     private $size = 0;
 
@@ -37,7 +38,9 @@ class SingleLinkList
      */
     public function __construct()
     {
-        $this->dummyHead = new Node(null);
+        $node = new Node(null);
+        $this->dummyHead = $node;
+        $this->tail = $node;
     }
 
     /**
@@ -47,13 +50,20 @@ class SingleLinkList
      */
     public function addLast(Node $node)
     {
-        $current = $this->dummyHead;
-        while ($current->next != null) {
-            $current = $current->next;
-        }
-        $current->next = $node;
+//        $current = $this->dummyHead;
+//        while ($current->next != null) {
+//            $current = $current->next;
+//        }
+//        $current->next = $node;
+        $this->tail->next = $node;
+        $this->tail = $node;
 
         return ++$this->size;
+    }
+
+    public function getTail()
+    {
+        return 'tail data: ' . $this->tail->data;
     }
 
     /**
@@ -75,6 +85,10 @@ class SingleLinkList
             if ($index == $currentIndex) {
                 $node->next = $current->next;
                 $current->next = $node;
+                if ($index == $this->size + 1) {
+                    // 尾部添加
+                    $this->tail = $node;
+                }
                 break;
             }
             $currentIndex++;
@@ -158,14 +172,17 @@ class SingleLinkList
 
 $link = new SingleLinkList();
 $link->addLast(new Node(1));
+var_dump($link->getTail());
 $link->addLast(new Node(2));
+var_dump($link->getTail());
 $link->insertNodeByIndex(3, new Node(3));
+var_dump($link->getTail());
 $link->addLast(new Node(4));
 $link->addLast(new Node(5));
 echo $link->getLength(), PHP_EOL;
 $link->showNode();
-echo '-----------', PHP_EOL;
-var_dump($link->searchNodeByIndex(3));
+//echo '-----------', PHP_EOL;
+//var_dump($link->searchNodeByIndex(3));
 echo '-----------', PHP_EOL;
 $link->deleteNodeByIndex(3);
 $link->showNode();
