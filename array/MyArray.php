@@ -3,13 +3,13 @@
 class MyArray
 {
 
-    private $array;
-    private $size;
-    private $capacity;
+    protected $data;
+    protected $size;
+    protected $capacity;
 
-    public function __construct(int $capacity)
+    public function __construct(int $capacity = 0)
     {
-        $this->array = array_fill(0, $capacity, null);
+        $this->data = array_fill(0, $capacity, null);
         $this->capacity = $capacity;
         $this->size = 0;
     }
@@ -17,7 +17,7 @@ class MyArray
     public function toString()
     {
         $string = '';
-        foreach ($this->array as $key => $value) {
+        foreach ($this->data as $key => $value) {
             $string .= sprintf('%d => %s; ', $key, $value);
         }
 
@@ -33,24 +33,26 @@ class MyArray
 
         // 注意边界的处理
         for ($i = $this->size - 1; $i >= $index; $i--) {
-            $this->array[$i + 1] = $this->array[$i];
+            $this->data[$i + 1] = $this->data[$i];
         }
 
-        $this->array[$index] = $value;
+        $this->data[$index] = $value;
         $this->size++;
         if ($this->size >= $this->capacity) {
             $this->resize($this->capacity * 2);
         }
+
+        return $value;
     }
 
     public function addFirst(int $value)
     {
-        $this->add(0, $value);
+        return $this->add(0, $value);
     }
 
     public function addLast(int $value)
     {
-        $this->add($this->size, $value);
+        return $this->add($this->size, $value);
     }
 
     public function delete(int $index)
@@ -61,22 +63,35 @@ class MyArray
 
         // 注意边界的处理
         for ($i = $index; $i < $this->size - 1; $i++) {
-            $this->array[$i] = $this->array[$i + 1];
+            $this->data[$i] = $this->data[$i + 1];
         }
 
+        $returnValue = $this->data[$this->size - 1];
+        $this->data[$this->size - 1] = null;
         $this->size--;
         if ($this->size < $this->capacity / 2 && $this->capacity / 2 > 0) {
             $this->resize($this->capacity / 2);
         }
+        return $returnValue;
     }
 
-    private function resize(int $newCapacity)
+    public function deleteFirst()
+    {
+        return $this->delete(0);
+    }
+
+    public function deleteLast()
+    {
+        return $this->delete($this->size - 1);
+    }
+
+    protected function resize(int $newCapacity)
     {
         $newArray = array_fill(0, $newCapacity, null);
         for ($i = 0; $i < $this->size; $i++)
-            $newArray[$i] = $this->array[$i];
+            $newArray[$i] = $this->data[$i];
 
-        $this->array = $newArray;
+        $this->data = $newArray;
         $this->capacity = $newCapacity;
     }
 
@@ -86,7 +101,7 @@ class MyArray
             throw new Exception('out of range');
         }
 
-        return $this->array[$index];
+        return $this->data[$index];
     }
 
     public function getFirst()
@@ -105,31 +120,6 @@ class MyArray
             throw new Exception('out of range');
         }
 
-        $this->array[$index] = $value;
+        $this->data[$index] = $value;
     }
 }
-
-$arr = new MyArray(3);
-var_dump($arr->toString());
-$arr->add(0, 12);
-var_dump($arr->toString());
-$arr->add(0, 3);
-var_dump($arr->toString());
-$arr->add(1, 7);
-var_dump($arr->toString());
-$arr->add(1, 2);
-var_dump($arr->toString());
-$arr->add(1, 66);
-var_dump($arr->toString());
-$arr->add(0, 4);
-var_dump($arr->toString());
-$arr->delete(1);
-var_dump($arr->toString());
-$arr->delete(1);
-$arr->delete(1);
-var_dump($arr->toString());
-$arr->delete(0);
-var_dump($arr->toString());
-$arr->addFirst(124);
-$arr->addLast(999);
-var_dump($arr->toString());
