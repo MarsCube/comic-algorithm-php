@@ -9,16 +9,6 @@ class ArrayStack extends MyArray
         parent::__construct($capacity);
     }
 
-    public function getSize()
-    {
-        return $this->size;
-    }
-
-    public function isEmpty()
-    {
-        return $this->size == 0;
-    }
-
     public function push($value)
     {
         return $this->addLast($value);

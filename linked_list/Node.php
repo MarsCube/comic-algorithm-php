@@ -1,7 +1,5 @@
 <?php
 
-namespace app\linked_list;
-
 class Node
 {
     public $data;

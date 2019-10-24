@@ -1,9 +1,6 @@
 <?php
 
-namespace app\linked_list;
 require_once('Node.php');
-
-use Exception;
 
 /**
  * Class SingleLinkList
@@ -156,21 +153,14 @@ class SingleLinkList
             echo PHP_EOL;
         }
     }
-}
 
-$link = new SingleLinkList();
-$link->addLast(new Node(1));
-var_dump($link->getTail());
-$link->addLast(new Node(2));
-var_dump($link->getTail());
-$link->insertNodeByIndex(3, new Node(3));
-var_dump($link->getTail());
-$link->addLast(new Node(4));
-$link->addLast(new Node(5));
-echo $link->getLength(), PHP_EOL;
-$link->showNode();
-//echo '-----------', PHP_EOL;
-//var_dump($link->searchNodeByIndex(3));
-echo '-----------', PHP_EOL;
-$link->deleteNodeByIndex(3);
-$link->showNode();
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    public function isEmpty()
+    {
+        return $this->size == 0;
+    }
+}

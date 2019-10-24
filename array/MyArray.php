@@ -25,6 +25,16 @@ class MyArray
         return $string;
     }
 
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    public function isEmpty()
+    {
+        return $this->size == 0;
+    }
+
     public function add(int $index, int $value)
     {
         if ($index < 0 || $index > $this->capacity - 1) {
